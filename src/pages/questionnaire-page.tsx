@@ -6,12 +6,7 @@ import {
   CheckCircle2,
   CircleDot,
   Clock,
-  FileText,
-  Info,
-  Lightbulb,
   Save,
-  Shield,
-  Sparkles,
 } from "lucide-react"
 import {
   questionnaireContent,
@@ -19,7 +14,6 @@ import {
   type QuestionnaireSection,
 } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
@@ -44,8 +38,7 @@ interface QuestionnairePageProps {
 }
 
 export function QuestionnairePage({ onExit }: QuestionnairePageProps) {
-  const { sections, questionnaire_name, publisher_org, due_date, instructions } =
-    questionnaireContent
+  const { sections, questionnaire_name, due_date } = questionnaireContent
 
   const [sectionIndex, setSectionIndex] = useState(0)
   const [answers, setAnswers] = useState<Answers>({
@@ -90,43 +83,21 @@ export function QuestionnairePage({ onExit }: QuestionnairePageProps) {
               className="shrink-0 text-muted-foreground hover:text-foreground"
             >
               <ArrowLeft className="mr-1 h-4 w-4" />
-              返回技能档案
+              返回
             </Button>
             <div className="hidden h-6 w-px bg-border md:block" />
-            <div className="min-w-0 flex flex-col">
-              <div className="flex items-center gap-2">
-                <h1 className="truncate text-sm font-semibold text-foreground md:text-base">
-                  {questionnaire_name}
-                </h1>
-                <Badge
-                  variant="outline"
-                  className="hidden md:inline-flex border-teal-300 bg-teal-50 text-teal-800"
-                >
-                  {publisher_org}
-                </Badge>
-              </div>
-              <div className="hidden md:flex items-center gap-3 text-xs text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  截止 {due_date}（剩余 {days} 天）
-                </span>
-                <span className="inline-flex items-center gap-1">
-                  <Shield className="h-3 w-3" />
-                  作答内容仅用于生成你的技能档案
-                </span>
-              </div>
-            </div>
+            <h1 className="truncate text-sm font-semibold text-foreground md:text-base">
+              {questionnaire_name}
+            </h1>
+            <span className="hidden md:inline-flex items-center gap-1 text-xs text-muted-foreground shrink-0">
+              <Clock className="h-3 w-3" />
+              剩余 {days} 天
+            </span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="hidden sm:flex items-center gap-1.5 rounded-md bg-emerald-50 px-2.5 py-1 text-xs text-emerald-700">
-              <CheckCircle2 className="h-3.5 w-3.5" />
-              已自动保存 14:32
-            </div>
-            <Button variant="outline" size="sm">
-              <Save className="mr-1.5 h-4 w-4" />
-              保存草稿
-            </Button>
-          </div>
+          <Button variant="outline" size="sm">
+            <Save className="mr-1.5 h-4 w-4" />
+            保存草稿
+          </Button>
         </div>
 
         {/* Progress bar */}
@@ -148,7 +119,7 @@ export function QuestionnairePage({ onExit }: QuestionnairePageProps) {
       </header>
 
       {/* Body */}
-      <div className="mx-auto grid w-full max-w-[1400px] flex-1 grid-cols-1 gap-6 px-6 py-6 lg:grid-cols-[260px_minmax(0,1fr)_300px] lg:px-8">
+      <div className="mx-auto grid w-full max-w-5xl flex-1 grid-cols-1 gap-6 px-6 py-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-8">
         {/* Section navigator */}
         <aside className="lg:sticky lg:top-[104px] lg:self-start">
           <nav className="rounded-xl border border-border bg-card p-3">
@@ -209,42 +180,14 @@ export function QuestionnairePage({ onExit }: QuestionnairePageProps) {
               })}
             </ul>
           </nav>
-
-          <div className="mt-4 rounded-xl border border-border bg-card p-4">
-            <div className="flex items-center gap-2">
-              <Info className="h-4 w-4 text-teal-700" />
-              <h3 className="text-sm font-semibold">答题须知</h3>
-            </div>
-            <ul className="mt-2 space-y-2 text-xs text-muted-foreground leading-relaxed">
-              {instructions.map((t, i) => (
-                <li key={i} className="flex gap-2">
-                  <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-teal-500" />
-                  <span>{t}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </aside>
 
         {/* Main question area */}
         <main className="min-w-0">
-          <div className="mb-5 flex items-baseline justify-between gap-4">
-            <div>
-              <div className="text-xs text-muted-foreground">
-                第 {sectionIndex + 1} / {sections.length} 节
-              </div>
-              <h2 className="mt-1 text-xl font-semibold text-foreground">
-                {currentSection.title}
-              </h2>
-              {currentSection.description ? (
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {currentSection.description}
-                </p>
-              ) : null}
-            </div>
-            <Badge variant="outline" className="shrink-0">
-              共 {currentSection.questions.length} 题
-            </Badge>
+          <div className="mb-5">
+            <h2 className="text-xl font-semibold text-foreground">
+              {currentSection.title}
+            </h2>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -291,40 +234,6 @@ export function QuestionnairePage({ onExit }: QuestionnairePageProps) {
             )}
           </div>
         </main>
-
-        {/* Assistant panel */}
-        <aside className="hidden lg:block lg:sticky lg:top-[104px] lg:self-start">
-          <div className="rounded-xl border border-border bg-card p-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-teal-700" />
-              <h3 className="text-sm font-semibold">AI 作答助手</h3>
-            </div>
-            <div className="mt-3 space-y-3">
-              <div className="rounded-lg border border-teal-200 bg-teal-50 p-3">
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-teal-800">
-                  <Lightbulb className="h-3.5 w-3.5" />
-                  等级参考
-                </div>
-                <p className="mt-1.5 text-xs text-teal-900 leading-relaxed">
-                  你在简历与项目中的「产品需求分析」表现倾向 L4
-                  ，可对照「主导复杂项目」这一要点进行判断。
-                </p>
-              </div>
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-3">
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-800">
-                  <FileText className="h-3.5 w-3.5" />
-                  证据建议
-                </div>
-                <p className="mt-1.5 text-xs text-amber-900 leading-relaxed">
-                  在举例题中引用项目名称 / 指标 / 时间，可显著提升证据强度。
-                </p>
-              </div>
-              <div className="rounded-lg border border-border bg-muted/40 p-3 text-xs text-muted-foreground leading-relaxed">
-                所有作答记录在审计日志中，经理认定前可随时修改。
-              </div>
-            </div>
-          </div>
-        </aside>
       </div>
     </div>
   )
@@ -360,29 +269,12 @@ function QuestionCard({ index, question, value, onChange }: QuestionCardProps) {
           {answered ? <Check className="h-4 w-4" /> : index}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-[15px] font-semibold text-foreground leading-snug">
-              {question.title}
-            </h3>
+          <h3 className="text-[15px] font-semibold text-foreground leading-snug">
+            {question.title}
             {question.required ? (
-              <span className="text-xs font-medium text-rose-600">必答</span>
-            ) : (
-              <span className="text-xs text-muted-foreground">选答</span>
-            )}
-            {question.skill_name ? (
-              <Badge
-                variant="outline"
-                className="border-slate-300 bg-slate-50 text-slate-700"
-              >
-                关联技能 · {question.skill_name}
-              </Badge>
+              <span className="ml-1 text-rose-600">*</span>
             ) : null}
-          </div>
-          {question.subtitle ? (
-            <p className="mt-1 text-sm text-muted-foreground">
-              {question.subtitle}
-            </p>
-          ) : null}
+          </h3>
 
           <div className="mt-4">{renderInput(question, value, onChange)}</div>
         </div>
