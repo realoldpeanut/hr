@@ -37,7 +37,11 @@ function KpiCard({
   )
 }
 
-export function PageHeader() {
+interface PageHeaderProps {
+  onPreviewProfile?: () => void
+}
+
+export function PageHeader({ onPreviewProfile }: PageHeaderProps = {}) {
   return (
     <header className="border-b border-border bg-card">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-6 px-6 py-6 lg:px-8">
@@ -60,7 +64,11 @@ export function PageHeader() {
                 3
               </span>
             </Button>
-            <Button variant="outline" size="default">
+            <Button
+              variant="outline"
+              size="default"
+              onClick={onPreviewProfile}
+            >
               <Eye />
               预览技能档案
             </Button>

@@ -7,8 +7,13 @@ import { EvidenceTimeline } from "@/components/evidence-timeline"
 import { SidePanel } from "@/components/side-panel"
 import { QuestionnairePage } from "@/pages/questionnaire-page"
 import { QuestionnaireHistoryPage } from "@/pages/questionnaire-history-page"
+import { SkillProfilePreviewPage } from "@/pages/skill-profile-preview-page"
 
-type View = "dashboard" | "questionnaire" | "questionnaire-history"
+type View =
+  | "dashboard"
+  | "questionnaire"
+  | "questionnaire-history"
+  | "profile-preview"
 
 export default function App() {
   const [view, setView] = useState<View>("dashboard")
@@ -26,9 +31,13 @@ export default function App() {
     )
   }
 
+  if (view === "profile-preview") {
+    return <SkillProfilePreviewPage onExit={() => setView("dashboard")} />
+  }
+
   return (
     <main className="min-h-screen bg-background">
-      <PageHeader />
+      <PageHeader onPreviewProfile={() => setView("profile-preview")} />
       <QuestionnaireReminder onStart={() => setView("questionnaire")} />
 
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-6 px-6 py-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">

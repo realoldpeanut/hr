@@ -72,6 +72,19 @@ export interface QuestionnaireTask {
   recognized_skills?: RecognizedSkillSummary[]
 }
 
+export const employeeProfile = {
+  name: "林知远",
+  employee_no: "E-2231",
+  job_title: "高级产品经理",
+  job_family: "产品条线",
+  department: "支付业务部 · 交易产品组",
+  level: "P6",
+  manager: "王立",
+  location: "上海",
+  tenure_years: 4.2,
+  profile_generated_at: "2026-04-18 14:32",
+}
+
 export const kpi = {
   completeness: 68,
   confirmed: 12,
@@ -816,7 +829,7 @@ export const questionnaireContent: QuestionnaireContent = {
     },
     {
       id: "s-2",
-      title: "系统设计与架构",
+      title: "系统���计与架构",
       description: "评估你在技术方案设计、架构评审中的参与深度。",
       questions: [
         {
