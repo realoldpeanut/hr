@@ -9,14 +9,9 @@ export function EvidenceTimeline() {
       className="rounded-xl border border-border bg-card"
     >
       <header className="flex items-center justify-between border-b border-border px-5 py-4">
-        <div>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground">
-            最近更新
-          </h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            技能档案的形成与更新记录
-          </p>
-        </div>
+        <h2 className="text-lg font-semibold tracking-tight text-foreground">
+          最近更新
+        </h2>
         <Button
           variant="link"
           size="sm"
@@ -52,18 +47,13 @@ export function EvidenceTimeline() {
               >
                 <Icon className="h-4 w-4" />
               </div>
-              <div className="flex flex-1 flex-col gap-0.5 min-w-0">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="text-sm font-medium text-foreground leading-snug">
-                    {ev.title}
-                  </p>
-                  <span className="text-xs text-muted-foreground tabular-nums shrink-0">
-                    {ev.time}
-                  </span>
-                </div>
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  {ev.description}
+              <div className="flex flex-1 items-baseline justify-between gap-2 min-w-0">
+                <p className="text-sm font-medium text-foreground leading-snug">
+                  {ev.title}
                 </p>
+                <span className="text-xs text-muted-foreground tabular-nums shrink-0">
+                  {ev.time}
+                </span>
               </div>
             </li>
           )

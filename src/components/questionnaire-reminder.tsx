@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, AlertCircle, Building2 } from "lucide-react"
+import { ArrowRight, Clock, AlertCircle } from "lucide-react"
 import { questionnaireTasks } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -53,33 +53,22 @@ export function QuestionnaireReminder({ onStart }: QuestionnaireReminderProps = 
                   variant="outline"
                   className="border-teal-300 bg-white text-teal-800"
                 >
-                  组织发布 · {statusLabel}
+                  {statusLabel}
                 </Badge>
                 {isOverdue ? (
                   <Badge className="bg-rose-600 text-white">已逾期</Badge>
                 ) : null}
-                <span className="text-xs text-muted-foreground">
-                  预计耗时 {primary.estimated_minutes} 分钟
-                </span>
               </div>
               <h3 className="text-base font-semibold text-slate-900 leading-snug">
                 {primary.questionnaire_name}
               </h3>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-1">
-                  <Building2 className="h-3.5 w-3.5" />
-                  {primary.publisher_org}
-                </span>
-                <span className="inline-flex items-center gap-1">
                   <Clock className="h-3.5 w-3.5" />
-                  截止 {primary.due_date}
-                  <span className={isOverdue ? "text-rose-600" : "text-amber-700"}>
-                    （{isOverdue ? `逾期 ${Math.abs(days)} 天` : `剩余 ${days} 天`}）
+                  <span className={isOverdue ? "text-rose-600" : undefined}>
+                    {isOverdue ? `逾期 ${Math.abs(days)} 天` : `剩余 ${days} 天`}
                   </span>
                 </span>
-                {primary.employee_task_status === "in_progress" ? (
-                  <span>作答进度 {primary.progress}%</span>
-                ) : null}
               </div>
 
               {primary.employee_task_status === "in_progress" ? (

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import { Search, SlidersHorizontal, AlertTriangle } from "lucide-react"
 import { skills, type SkillSummary, type SkillStatus } from "@/lib/mock-data"
-import { StatusBadge, statusMeta } from "./status-badge"
+import { StatusBadge } from "./status-badge"
 import { SkillDetailDrawer } from "./skill-detail-drawer"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -82,14 +82,9 @@ export function SkillsOverview() {
     >
       <header className="flex flex-col gap-4 border-b border-border px-5 py-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-semibold tracking-tight text-foreground">
-              技能总览
-            </h2>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              聚合六类来源证据，展示当前岗位技能画像
-            </p>
-          </div>
+          <h2 className="text-lg font-semibold tracking-tight text-foreground">
+            技能总览
+          </h2>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -219,21 +214,9 @@ export function SkillsOverview() {
         </table>
       </div>
 
-      <footer className="flex items-center justify-between border-t border-border px-5 py-3 text-xs text-muted-foreground">
-        <span>
-          共 <span className="text-foreground font-medium">{filtered.length}</span>{" "}
-          项技能
-        </span>
-        <div className="flex items-center gap-3">
-          {(Object.keys(statusMeta) as SkillStatus[]).slice(0, 4).map((k) => (
-            <span key={k} className="inline-flex items-center gap-1.5">
-              <span
-                className={`h-1.5 w-1.5 rounded-full ${statusMeta[k].dot}`}
-              />
-              {statusMeta[k].label}
-            </span>
-          ))}
-        </div>
+      <footer className="border-t border-border px-5 py-3 text-xs text-muted-foreground">
+        共 <span className="text-foreground font-medium">{filtered.length}</span>{" "}
+        项技能
       </footer>
 
       <SkillDetailDrawer

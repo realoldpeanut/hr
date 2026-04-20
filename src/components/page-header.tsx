@@ -1,4 +1,4 @@
-import { Bell, Eye, Send, Sparkles } from "lucide-react"
+import { Bell, Eye, Send } from "lucide-react"
 import { kpi } from "@/lib/mock-data"
 import { Button } from "@/components/ui/button"
 
@@ -42,16 +42,11 @@ export function PageHeader() {
     <header className="border-b border-border bg-card">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-6 px-6 py-6 lg:px-8">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-teal-700">
-              <Sparkles className="h-3.5 w-3.5" />
-              Talent / Skills
-            </div>
+          <div className="flex flex-col gap-1">
             <h1 className="text-3xl font-semibold tracking-tight text-foreground text-balance">
               个人技能认定
             </h1>
-            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              通过组织发布问卷、简历、绩效、项目、学习记录和经理确认，建立你的技能档案。
+            <p className="text-xs text-muted-foreground">
               最近更新于{" "}
               <span className="text-foreground">{kpi.lastUpdated}</span>
             </p>
@@ -82,14 +77,8 @@ export function PageHeader() {
             label="技能完整度"
             value={`${kpi.completeness}%`}
             accent="brand"
-            hint="当前岗位"
           />
-          <KpiCard
-            label="已认定技能"
-            value={kpi.confirmed}
-            hint={`/ ${kpi.totalSkills}`}
-            accent="success"
-          />
+          <KpiCard label="已认定技能" value={kpi.confirmed} accent="success" />
           <KpiCard label="待经理确认" value={kpi.pendingManager} accent="warning" />
           <KpiCard
             label="待完成问卷"

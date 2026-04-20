@@ -33,11 +33,6 @@ export default function App() {
         </div>
       </div>
 
-      <footer className="border-t border-border bg-card">
-        <div className="mx-auto max-w-[1400px] px-6 py-4 text-center text-xs text-muted-foreground lg:px-8">
-          技能档案由系统聚合六类来源生成 · 所有手动编辑均记录审计日志 · AI 仅用于总结与提示
-        </div>
-      </footer>
     </main>
   )
 }
