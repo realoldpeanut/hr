@@ -387,6 +387,217 @@ export const sourceStats = {
   },
 }
 
+export type QuestionType =
+  | "skill_level"
+  | "single_choice"
+  | "multi_choice"
+  | "likert"
+  | "text"
+
+export interface LevelOption {
+  value: SkillLevel
+  label: string
+  description: string
+}
+
+export interface QuestionOption {
+  value: string
+  label: string
+  hint?: string
+}
+
+export interface Question {
+  id: string
+  type: QuestionType
+  title: string
+  subtitle?: string
+  required?: boolean
+  skill_name?: string
+  levels?: LevelOption[]
+  options?: QuestionOption[]
+  scale?: { min: number; max: number; minLabel: string; maxLabel: string }
+  placeholder?: string
+  maxLength?: number
+}
+
+export interface QuestionnaireSection {
+  id: string
+  title: string
+  description?: string
+  questions: Question[]
+}
+
+export interface QuestionnaireContent {
+  questionnaire_id: string
+  questionnaire_name: string
+  publisher_org: string
+  due_date: string
+  estimated_minutes: number
+  instructions: string[]
+  sections: QuestionnaireSection[]
+}
+
+const standardLevels: LevelOption[] = [
+  {
+    value: "L1",
+    label: "L1 · 入门",
+    description: "了解概念与基本术语，可在指导下完成简单任务。",
+  },
+  {
+    value: "L2",
+    label: "L2 · 基础",
+    description: "能独立完成常规任务，遇到复杂问题需他人协助。",
+  },
+  {
+    value: "L3",
+    label: "L3 · 熟练",
+    description: "可独立承担中等复杂度工作，偶尔需要专家把关。",
+  },
+  {
+    value: "L4",
+    label: "L4 · 精通",
+    description: "能主导复杂项目，指导他人并识别非显性风险。",
+  },
+  {
+    value: "L5",
+    label: "L5 · 专家",
+    description: "业务/技术领域意见领袖，可定义标准、引领创新。",
+  },
+]
+
+export const questionnaireContent: QuestionnaireContent = {
+  questionnaire_id: "q-2026-q2-001",
+  questionnaire_name: "2026 Q2 产品与技术岗位标准化技能问卷",
+  publisher_org: "人才发展中心 · COE",
+  due_date: "2026-04-30",
+  estimated_minutes: 18,
+  instructions: [
+    "请根据最近 6 个月的真实工作情况作答，作答结果将作为技能档案证据之一。",
+    "所有作答自动保存，可随时关闭页面，下次进入从当前题目继续。",
+    "等级自评将与简历、项目、绩效等来源交叉验证，存在差异时会提示补充证据。",
+  ],
+  sections: [
+    {
+      id: "s-1",
+      title: "产品与需求能力",
+      description: "评估你在需求发现、拆解与交付方面的实际水平。",
+      questions: [
+        {
+          id: "q-1",
+          type: "skill_level",
+          title: "请评估你在「产品需求分析」方面的当前水平",
+          subtitle: "结合最近完成的两个项目进行判断，而不是最高水平。",
+          required: true,
+          skill_name: "产品需求分析",
+          levels: standardLevels,
+        },
+        {
+          id: "q-2",
+          type: "multi_choice",
+          title: "最近 6 个月你主要承担了哪些需求类型？",
+          subtitle: "可多选，至少选择 1 项。",
+          required: true,
+          options: [
+            { value: "business", label: "业务流程类需求" },
+            { value: "platform", label: "平台 / 基础设施类需求" },
+            { value: "data", label: "数据与报表类需求" },
+            { value: "ai", label: "AI / 智能化类需求" },
+            { value: "compliance", label: "合规与风险类需求" },
+          ],
+        },
+        {
+          id: "q-3",
+          type: "text",
+          title: "请举一个最有代表性的需求分析案例",
+          subtitle: "简要描述背景、你的做法和结果，200 字以内。",
+          placeholder:
+            "例：在支付重构项目中，我梳理了 12 个上下游系统的调用链，产出需求文档 3 份，推动交付提前 2 周上线……",
+          maxLength: 200,
+        },
+      ],
+    },
+    {
+      id: "s-2",
+      title: "系统设计与架构",
+      description: "评估你在技术方案设计、架构评审中的参与深度。",
+      questions: [
+        {
+          id: "q-4",
+          type: "skill_level",
+          title: "请评估你在「系统架构设计」方面的当前水平",
+          required: true,
+          skill_name: "系统架构设计",
+          levels: standardLevels,
+        },
+        {
+          id: "q-5",
+          type: "likert",
+          title: "在最近的项目中，你主导架构方案设计的频率？",
+          required: true,
+          scale: { min: 1, max: 5, minLabel: "从未", maxLabel: "每个项目" },
+        },
+        {
+          id: "q-6",
+          type: "single_choice",
+          title: "你在架构评审中最常承担的角色？",
+          required: true,
+          options: [
+            { value: "owner", label: "方案主导人", hint: "负责出方案并答辩" },
+            { value: "reviewer", label: "评审专家", hint: "评估他人方案" },
+            { value: "contributor", label: "协同贡献者", hint: "提出局部优化" },
+            { value: "observer", label: "参与学习", hint: "以学习观察为主" },
+          ],
+        },
+      ],
+    },
+    {
+      id: "s-3",
+      title: "跨团队协作与影响力",
+      questions: [
+        {
+          id: "q-7",
+          type: "multi_choice",
+          title: "你在过去半年推动过以下哪些跨团队事项？",
+          options: [
+            { value: "align", label: "跨部门目标对齐" },
+            { value: "conflict", label: "解决跨团队冲突" },
+            { value: "standard", label: "制定跨团队协作规范" },
+            { value: "onboarding", label: "新成员融入与带教" },
+            { value: "none", label: "以上皆未涉及" },
+          ],
+        },
+        {
+          id: "q-8",
+          type: "likert",
+          title: "你在跨团队沟通中的主动性如何？",
+          scale: { min: 1, max: 5, minLabel: "被动响应", maxLabel: "持续引领" },
+        },
+      ],
+    },
+    {
+      id: "s-4",
+      title: "AI 与新技术应用",
+      description: "可选板块，便于系统识别你在新兴技术上的经验。",
+      questions: [
+        {
+          id: "q-9",
+          type: "skill_level",
+          title: "请评估你在「AI 工具应用」方面的当前水平",
+          skill_name: "AI 工具应用",
+          levels: standardLevels,
+        },
+        {
+          id: "q-10",
+          type: "text",
+          title: "你希望在 AI / 新技术方向上获得怎样的成长机会？",
+          placeholder: "例：希望参与 AI Agent 产品化项目，系统学习 RAG 落地经验……",
+          maxLength: 150,
+        },
+      ],
+    },
+  ],
+}
+
 export const aiTips = [
   {
     id: "ai-1",

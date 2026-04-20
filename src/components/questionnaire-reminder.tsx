@@ -11,7 +11,11 @@ function daysUntil(date: string) {
   return diff
 }
 
-export function QuestionnaireReminder() {
+interface QuestionnaireReminderProps {
+  onStart?: () => void
+}
+
+export function QuestionnaireReminder({ onStart }: QuestionnaireReminderProps = {}) {
   if (!questionnaireTasks.length) return null
   const primary = [...questionnaireTasks].sort(
     (a, b) => new Date(a.due_date).getTime() - new Date(b.due_date).getTime(),
@@ -94,7 +98,7 @@ export function QuestionnaireReminder() {
                 查看全部 {questionnaireTasks.length} 份
               </Button>
             ) : null}
-            <Button variant="accent">
+            <Button variant="accent" onClick={onStart}>
               {cta}
               <ArrowRight />
             </Button>
