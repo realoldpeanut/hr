@@ -13,9 +13,19 @@ import {
   AlertCircle,
 } from "lucide-react"
 import { sourceStats, questionnaireTasks } from "@/lib/mock-data"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
-type Metric = { label: string; value: string | number; tone?: "default" | "warning" | "success" | "danger" }
-type Action = { label: string; icon?: typeof Upload; primary?: boolean }
+type Metric = {
+  label: string
+  value: string | number
+  tone?: "default" | "warning" | "success" | "danger"
+}
+type Action = {
+  label: string
+  icon?: typeof Upload
+  primary?: boolean
+}
 
 interface ModuleCardProps {
   icon: typeof FileText
@@ -27,16 +37,30 @@ interface ModuleCardProps {
   footer?: React.ReactNode
 }
 
-function ModuleCard({ icon: Icon, title, subtitle, iconTone, metrics, actions, footer }: ModuleCardProps) {
+function ModuleCard({
+  icon: Icon,
+  title,
+  subtitle,
+  iconTone,
+  metrics,
+  actions,
+  footer,
+}: ModuleCardProps) {
   return (
-    <article className="group flex flex-col gap-4 rounded-xl border border-border bg-card p-5 transition hover:border-slate-300 hover:shadow-sm">
+    <Card className="group flex flex-col gap-4 p-5 transition hover:border-slate-300 hover:shadow-sm">
       <div className="flex items-start gap-3">
-        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${iconTone}`}>
+        <div
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${iconTone}`}
+        >
           <Icon className="h-5 w-5" />
         </div>
         <div className="flex flex-col gap-0.5">
-          <h3 className="font-semibold text-foreground leading-snug">{title}</h3>
-          <p className="text-xs leading-relaxed text-muted-foreground">{subtitle}</p>
+          <h3 className="font-semibold text-foreground leading-snug">
+            {title}
+          </h3>
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {subtitle}
+          </p>
         </div>
       </div>
 
@@ -49,11 +73,16 @@ function ModuleCard({ icon: Icon, title, subtitle, iconTone, metrics, actions, f
             danger: "text-rose-600",
           }
           return (
-            <div key={i} className="flex flex-col gap-0.5 rounded-md bg-slate-50/70 px-2.5 py-2">
+            <div
+              key={i}
+              className="flex flex-col gap-0.5 rounded-md bg-slate-50/70 px-2.5 py-2"
+            >
               <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
                 {m.label}
               </span>
-              <span className={`text-lg font-semibold tabular-nums ${toneMap[m.tone ?? "default"]}`}>
+              <span
+                className={`text-lg font-semibold tabular-nums ${toneMap[m.tone ?? "default"]}`}
+              >
                 {m.value}
               </span>
             </div>
@@ -61,28 +90,27 @@ function ModuleCard({ icon: Icon, title, subtitle, iconTone, metrics, actions, f
         })}
       </div>
 
-      {footer ? <div className="text-xs text-muted-foreground">{footer}</div> : null}
+      {footer ? (
+        <div className="text-xs text-muted-foreground">{footer}</div>
+      ) : null}
 
       <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
         {actions.map((a, i) => {
           const ActionIcon = a.icon
           return (
-            <button
+            <Button
               key={i}
-              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition ${
-                a.primary
-                  ? "bg-primary text-primary-foreground hover:opacity-90"
-                  : "border border-border bg-card text-foreground hover:bg-muted"
-              }`}
+              size="sm"
+              variant={a.primary ? "default" : "outline"}
             >
-              {ActionIcon ? <ActionIcon className="h-3.5 w-3.5" /> : null}
+              {ActionIcon ? <ActionIcon /> : null}
               {a.label}
-              {a.primary ? <ArrowRight className="h-3.5 w-3.5" /> : null}
-            </button>
+              {a.primary ? <ArrowRight /> : null}
+            </Button>
           )
         })}
       </div>
-    </article>
+    </Card>
   )
 }
 
@@ -92,13 +120,15 @@ export function SourceModules() {
     <section aria-label="六类技能来源">
       <div className="mb-4 flex items-end justify-between">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground">技能来源</h2>
+          <h2 className="text-lg font-semibold tracking-tight text-foreground">
+            技能来源
+          </h2>
           <p className="text-xs text-muted-foreground mt-0.5">
             来自组织、系统与个人补充的六类证据源共同支撑技能档案
           </p>
         </div>
         <span className="hidden text-xs text-muted-foreground md:inline">
-          来源越多,证据强度越高
+          来源越多，证据强度越高
         </span>
       </div>
 
@@ -110,15 +140,25 @@ export function SourceModules() {
           title="技能问卷"
           subtitle="承接组织统一发布的标准化技能问卷结果"
           metrics={[
-            { label: "待完成", value: sourceStats.questionnaire.activeCount, tone: "danger" },
-            { label: "历史完成", value: sourceStats.questionnaire.historyCount },
-            { label: "识别技能", value: sourceStats.questionnaire.recognizedSkills },
+            {
+              label: "待完成",
+              value: sourceStats.questionnaire.activeCount,
+              tone: "danger",
+            },
+            {
+              label: "历史完成",
+              value: sourceStats.questionnaire.historyCount,
+            },
+            {
+              label: "识别技能",
+              value: sourceStats.questionnaire.recognizedSkills,
+            },
           ]}
           footer={
             activeQuestionnaire ? (
               <span>
-                当前:{activeQuestionnaire.questionnaire_name.slice(0, 20)}... · 截止{" "}
-                {activeQuestionnaire.due_date}
+                当前：{activeQuestionnaire.questionnaire_name.slice(0, 20)}...
+                · 截止 {activeQuestionnaire.due_date}
               </span>
             ) : (
               <span>上次完成 {sourceStats.questionnaire.lastCompleted}</span>
@@ -137,9 +177,16 @@ export function SourceModules() {
           title="简历上传 / 编辑"
           subtitle="把简历转为结构化职业经历与技能证据"
           metrics={[
-            { label: "上传状态", value: sourceStats.resume.uploaded ? "已上传" : "未上传", tone: "success" },
+            {
+              label: "上传状态",
+              value: sourceStats.resume.uploaded ? "已上传" : "未上传",
+              tone: "success",
+            },
             { label: "识别技能", value: sourceStats.resume.recognizedSkills },
-            { label: "最近更新", value: sourceStats.resume.lastUploaded.slice(5) },
+            {
+              label: "最近更新",
+              value: sourceStats.resume.lastUploaded.slice(5),
+            },
           ]}
           footer={
             <span className="inline-flex items-center gap-1">
@@ -158,11 +205,14 @@ export function SourceModules() {
           icon={TrendingUp}
           iconTone="bg-indigo-50 text-indigo-700"
           title="绩效评估"
-          subtitle="来自绩效系统的胜任力与评语证据(只读)"
+          subtitle="来自绩效系统的胜任力与评语证据（只读）"
           metrics={[
             { label: "同步周期", value: sourceStats.performance.syncedCycles },
             { label: "最近", value: sourceStats.performance.latestCycle },
-            { label: "映射技能", value: sourceStats.performance.mappedSkills },
+            {
+              label: "映射技能",
+              value: sourceStats.performance.mappedSkills,
+            },
           ]}
           footer={
             <div className="flex flex-wrap gap-1">
@@ -187,7 +237,11 @@ export function SourceModules() {
           subtitle="补充最强的实战类技能证据"
           metrics={[
             { label: "项目总数", value: sourceStats.project.totalProjects },
-            { label: "关键项目", value: sourceStats.project.keyProjects, tone: "success" },
+            {
+              label: "关键项目",
+              value: sourceStats.project.keyProjects,
+              tone: "success",
+            },
             { label: "关联技能", value: sourceStats.project.linkedSkills },
           ]}
           footer={
@@ -210,8 +264,16 @@ export function SourceModules() {
           subtitle="LMS 学习记录、外部课程和证书凭证"
           metrics={[
             { label: "课程完成", value: sourceStats.learning.completedCourses },
-            { label: "有效证书", value: sourceStats.learning.activeCertificates, tone: "success" },
-            { label: "即将过期", value: sourceStats.learning.expiringSoon, tone: "warning" },
+            {
+              label: "有效证书",
+              value: sourceStats.learning.activeCertificates,
+              tone: "success",
+            },
+            {
+              label: "即将过期",
+              value: sourceStats.learning.expiringSoon,
+              tone: "warning",
+            },
           ]}
           footer={
             sourceStats.learning.expiringSoon > 0 ? (
@@ -233,9 +295,21 @@ export function SourceModules() {
           title="经理认定"
           subtitle="直线经理的最终确认结果"
           metrics={[
-            { label: "已认定", value: sourceStats.manager.confirmed, tone: "success" },
-            { label: "待确认", value: sourceStats.manager.pending, tone: "warning" },
-            { label: "被退回", value: sourceStats.manager.returned, tone: "danger" },
+            {
+              label: "已认定",
+              value: sourceStats.manager.confirmed,
+              tone: "success",
+            },
+            {
+              label: "待确认",
+              value: sourceStats.manager.pending,
+              tone: "warning",
+            },
+            {
+              label: "被退回",
+              value: sourceStats.manager.returned,
+              tone: "danger",
+            },
           ]}
           footer={<span>最近提交于 {sourceStats.manager.lastSubmittedAt}</span>}
           actions={[

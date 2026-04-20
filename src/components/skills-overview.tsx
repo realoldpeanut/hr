@@ -1,10 +1,10 @@
-"use client"
-
 import { useMemo, useState } from "react"
 import { Search, SlidersHorizontal, AlertTriangle } from "lucide-react"
 import { skills, type SkillSummary, type SkillStatus } from "@/lib/mock-data"
 import { StatusBadge, statusMeta } from "./status-badge"
 import { SkillDetailDrawer } from "./skill-detail-drawer"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 const STATUS_FILTERS: { value: "all" | SkillStatus; label: string }[] = [
   { value: "all", label: "全部" },
@@ -20,7 +20,9 @@ function LevelBar({ level }: { level: SkillSummary["current_level"] }) {
   const n = map[level]
   return (
     <div className="flex items-center gap-1.5">
-      <span className="text-sm font-semibold text-foreground tabular-nums">{level}</span>
+      <span className="text-sm font-semibold text-foreground tabular-nums">
+        {level}
+      </span>
       <div className="flex gap-0.5">
         {[1, 2, 3, 4, 5].map((i) => (
           <span
@@ -34,11 +36,15 @@ function LevelBar({ level }: { level: SkillSummary["current_level"] }) {
 }
 
 function ConfidenceBar({ score }: { score: number }) {
-  const tone = score >= 80 ? "bg-emerald-500" : score >= 60 ? "bg-amber-500" : "bg-rose-500"
+  const tone =
+    score >= 80 ? "bg-emerald-500" : score >= 60 ? "bg-amber-500" : "bg-rose-500"
   return (
     <div className="flex items-center gap-2">
       <div className="h-1.5 w-16 overflow-hidden rounded-full bg-slate-100">
-        <div className={`h-full rounded-full ${tone}`} style={{ width: `${score}%` }} />
+        <div
+          className={`h-full rounded-full ${tone}`}
+          style={{ width: `${score}%` }}
+        />
       </div>
       <span className="text-xs text-muted-foreground tabular-nums">{score}</span>
     </div>
@@ -53,7 +59,12 @@ export function SkillsOverview() {
   const filtered = useMemo(() => {
     return skills.filter((s) => {
       if (statusFilter !== "all" && s.status !== statusFilter) return false
-      if (query && !s.skill_name.includes(query) && !s.skill_category.includes(query)) return false
+      if (
+        query &&
+        !s.skill_name.includes(query) &&
+        !s.skill_category.includes(query)
+      )
+        return false
       return true
     })
   }, [query, statusFilter])
@@ -72,26 +83,28 @@ export function SkillsOverview() {
       <header className="flex flex-col gap-4 border-b border-border px-5 py-4">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold tracking-tight text-foreground">技能总览</h2>
+            <h2 className="text-lg font-semibold tracking-tight text-foreground">
+              技能总览
+            </h2>
             <p className="text-xs text-muted-foreground mt-0.5">
-              聚合六类来源证据,展示当前岗位技能画像
+              聚合六类来源证据，展示当前岗位技能画像
             </p>
           </div>
           <div className="flex items-center gap-2">
             <div className="relative">
               <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <input
+              <Input
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="搜索技能名称或类别"
-                className="h-9 w-60 rounded-md border border-border bg-background pl-8 pr-3 text-sm outline-none transition focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+                className="h-9 w-60 pl-8"
               />
             </div>
-            <button className="inline-flex h-9 items-center gap-1.5 rounded-md border border-border bg-card px-3 text-sm font-medium text-foreground hover:bg-muted">
-              <SlidersHorizontal className="h-3.5 w-3.5" />
+            <Button variant="outline" size="sm">
+              <SlidersHorizontal />
               更多筛选
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -112,7 +125,9 @@ export function SkillsOverview() {
                 {f.label}
                 <span
                   className={`rounded-full px-1.5 text-[10px] tabular-nums ${
-                    active ? "bg-white/15 text-white" : "bg-muted text-muted-foreground"
+                    active
+                      ? "bg-white/15 text-white"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
                   {count}
@@ -145,7 +160,9 @@ export function SkillsOverview() {
                 <td className="px-5 py-3.5">
                   <div className="flex flex-col gap-0.5">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-foreground">{s.skill_name}</span>
+                      <span className="font-medium text-foreground">
+                        {s.skill_name}
+                      </span>
                       {s.conflict ? (
                         <span
                           title="存在冲突"
@@ -156,7 +173,9 @@ export function SkillsOverview() {
                         </span>
                       ) : null}
                     </div>
-                    <span className="text-xs text-muted-foreground">{s.skill_category}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {s.skill_category}
+                    </span>
                   </div>
                 </td>
                 <td className="px-3 py-3.5">
@@ -175,18 +194,23 @@ export function SkillsOverview() {
                   {s.last_updated_at}
                 </td>
                 <td className="px-5 py-3.5 text-right">
-                  <button
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="text-teal-700 hover:text-teal-800 h-auto px-0"
                     onClick={() => setSelected(s)}
-                    className="text-sm font-medium text-teal-700 hover:text-teal-800"
                   >
                     查看证据
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-5 py-12 text-center text-sm text-muted-foreground">
+                <td
+                  colSpan={7}
+                  className="px-5 py-12 text-center text-sm text-muted-foreground"
+                >
                   没有符合条件的技能
                 </td>
               </tr>
@@ -197,19 +221,28 @@ export function SkillsOverview() {
 
       <footer className="flex items-center justify-between border-t border-border px-5 py-3 text-xs text-muted-foreground">
         <span>
-          共 <span className="text-foreground font-medium">{filtered.length}</span> 项技能
+          共 <span className="text-foreground font-medium">{filtered.length}</span>{" "}
+          项技能
         </span>
         <div className="flex items-center gap-3">
           {(Object.keys(statusMeta) as SkillStatus[]).slice(0, 4).map((k) => (
             <span key={k} className="inline-flex items-center gap-1.5">
-              <span className={`h-1.5 w-1.5 rounded-full ${statusMeta[k].dot}`} />
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${statusMeta[k].dot}`}
+              />
               {statusMeta[k].label}
             </span>
           ))}
         </div>
       </footer>
 
-      <SkillDetailDrawer skill={selected} onClose={() => setSelected(null)} />
+      <SkillDetailDrawer
+        skill={selected}
+        open={!!selected}
+        onOpenChange={(open) => {
+          if (!open) setSelected(null)
+        }}
+      />
     </section>
   )
 }

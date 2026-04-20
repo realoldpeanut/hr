@@ -71,12 +71,36 @@ export const sourceMeta: Record<
   EvidenceSourceType,
   { label: string; icon: typeof FileText; tone: string }
 > = {
-  questionnaire: { label: "技能问卷", icon: FileText, tone: "text-teal-700 bg-teal-50" },
-  resume: { label: "简历", icon: Briefcase, tone: "text-slate-700 bg-slate-100" },
-  performance: { label: "绩效", icon: TrendingUp, tone: "text-indigo-700 bg-indigo-50" },
-  project: { label: "项目", icon: FolderKanban, tone: "text-amber-800 bg-amber-50" },
-  learning: { label: "学习与证书", icon: GraduationCap, tone: "text-emerald-700 bg-emerald-50" },
-  manager: { label: "经理认定", icon: UserCheck, tone: "text-rose-700 bg-rose-50" },
+  questionnaire: {
+    label: "技能问卷",
+    icon: FileText,
+    tone: "text-teal-700 bg-teal-50",
+  },
+  resume: {
+    label: "简历",
+    icon: Briefcase,
+    tone: "text-slate-700 bg-slate-100",
+  },
+  performance: {
+    label: "绩效",
+    icon: TrendingUp,
+    tone: "text-indigo-700 bg-indigo-50",
+  },
+  project: {
+    label: "项目",
+    icon: FolderKanban,
+    tone: "text-amber-800 bg-amber-50",
+  },
+  learning: {
+    label: "学习与证书",
+    icon: GraduationCap,
+    tone: "text-emerald-700 bg-emerald-50",
+  },
+  manager: {
+    label: "经理认定",
+    icon: UserCheck,
+    tone: "text-rose-700 bg-rose-50",
+  },
 }
 
 export function SourceChip({

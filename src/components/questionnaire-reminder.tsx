@@ -1,10 +1,13 @@
-"use client"
-
 import { ArrowRight, Clock, AlertCircle, Building2 } from "lucide-react"
 import { questionnaireTasks } from "@/lib/mock-data"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
 
 function daysUntil(date: string) {
-  const diff = Math.ceil((new Date(date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+  const diff = Math.ceil(
+    (new Date(date).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
+  )
   return diff
 }
 
@@ -26,10 +29,14 @@ export function QuestionnaireReminder() {
           ? "已逾期"
           : "已提交"
 
-  const cta = primary.employee_task_status === "in_progress" ? "继续作答" : "开始答卷"
+  const cta =
+    primary.employee_task_status === "in_progress" ? "继续作答" : "开始答卷"
 
   return (
-    <section aria-label="待完成技能问卷" className="mx-auto w-full max-w-[1400px] px-6 pt-6 lg:px-8">
+    <section
+      aria-label="待完成技能问卷"
+      className="mx-auto w-full max-w-[1400px] px-6 pt-6 lg:px-8"
+    >
       <div className="overflow-hidden rounded-xl border border-teal-200 bg-gradient-to-r from-teal-50 via-teal-50 to-white">
         <div className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-3">
@@ -38,13 +45,14 @@ export function QuestionnaireReminder() {
             </div>
             <div className="flex flex-col gap-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center rounded-full border border-teal-300 bg-white px-2 py-0.5 text-[11px] font-medium text-teal-800">
+                <Badge
+                  variant="outline"
+                  className="border-teal-300 bg-white text-teal-800"
+                >
                   组织发布 · {statusLabel}
-                </span>
+                </Badge>
                 {isOverdue ? (
-                  <span className="inline-flex items-center rounded-full bg-rose-600 px-2 py-0.5 text-[11px] font-medium text-white">
-                    已逾期
-                  </span>
+                  <Badge className="bg-rose-600 text-white">已逾期</Badge>
                 ) : null}
                 <span className="text-xs text-muted-foreground">
                   预计耗时 {primary.estimated_minutes} 分钟
@@ -71,26 +79,25 @@ export function QuestionnaireReminder() {
               </div>
 
               {primary.employee_task_status === "in_progress" ? (
-                <div className="mt-1 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-teal-100">
-                  <div
-                    className="h-full rounded-full bg-teal-600 transition-all"
-                    style={{ width: `${primary.progress}%` }}
-                  />
-                </div>
+                <Progress
+                  value={primary.progress}
+                  className="mt-1 h-1.5 w-full max-w-md bg-teal-100"
+                  indicatorClassName="bg-teal-600"
+                />
               ) : null}
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             {others > 0 ? (
-              <button className="text-sm font-medium text-teal-700 hover:text-teal-800">
+              <Button variant="link" className="text-teal-700 hover:text-teal-800">
                 查看全部 {questionnaireTasks.length} 份
-              </button>
+              </Button>
             ) : null}
-            <button className="inline-flex items-center gap-2 rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-teal-700">
+            <Button variant="accent">
               {cta}
-              <ArrowRight className="h-4 w-4" />
-            </button>
+              <ArrowRight />
+            </Button>
           </div>
         </div>
       </div>

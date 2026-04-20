@@ -5,7 +5,7 @@ import { SourceModules } from "@/components/source-modules"
 import { EvidenceTimeline } from "@/components/evidence-timeline"
 import { SidePanel } from "@/components/side-panel"
 
-export default function Page() {
+export default function App() {
   return (
     <main className="min-h-screen bg-background">
       <PageHeader />

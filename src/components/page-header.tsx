@@ -1,5 +1,6 @@
 import { Bell, Eye, Send, Sparkles } from "lucide-react"
 import { kpi } from "@/lib/mock-data"
+import { Button } from "@/components/ui/button"
 
 function KpiCard({
   label,
@@ -23,10 +24,14 @@ function KpiCard({
     <div className="flex flex-col gap-1 rounded-lg border border-border bg-card px-4 py-3">
       <div className="text-xs text-muted-foreground">{label}</div>
       <div className="flex items-baseline gap-1">
-        <span className={`text-2xl font-semibold tabular-nums ${accentMap[accent ?? "default"]}`}>
+        <span
+          className={`text-2xl font-semibold tabular-nums ${accentMap[accent ?? "default"]}`}
+        >
           {value}
         </span>
-        {hint ? <span className="text-xs text-muted-foreground">{hint}</span> : null}
+        {hint ? (
+          <span className="text-xs text-muted-foreground">{hint}</span>
+        ) : null}
       </div>
     </div>
   )
@@ -46,36 +51,51 @@ export function PageHeader() {
               个人技能认定
             </h1>
             <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              通过组织发布问卷、简历、绩效、项目、学习记录和经理确认,建立你的技能档案。
-              最近更新于 <span className="text-foreground">{kpi.lastUpdated}</span>
+              通过组织发布问卷、简历、绩效、项目、学习记录和经理确认，建立你的技能档案。
+              最近更新于{" "}
+              <span className="text-foreground">{kpi.lastUpdated}</span>
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <button className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm font-medium text-foreground transition hover:bg-muted">
-              <Bell className="h-4 w-4" />
+            <Button variant="outline" size="default">
+              <Bell />
               查看待办
               <span className="ml-1 rounded-full bg-rose-500 px-1.5 py-0.5 text-[10px] font-semibold text-white">
                 3
               </span>
-            </button>
-            <button className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm font-medium text-foreground transition hover:bg-muted">
-              <Eye className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="default">
+              <Eye />
               预览技能档案
-            </button>
-            <button className="inline-flex items-center gap-2 rounded-md bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90">
-              <Send className="h-4 w-4" />
+            </Button>
+            <Button variant="default" size="default">
+              <Send />
               提交经理认定
-            </button>
+            </Button>
           </div>
         </div>
 
         {/* KPI row */}
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
-          <KpiCard label="技能完整度" value={`${kpi.completeness}%`} accent="brand" hint="当前岗位" />
-          <KpiCard label="已认定技能" value={kpi.confirmed} hint={`/ ${kpi.totalSkills}`} accent="success" />
+          <KpiCard
+            label="技能完整度"
+            value={`${kpi.completeness}%`}
+            accent="brand"
+            hint="当前岗位"
+          />
+          <KpiCard
+            label="已认定技能"
+            value={kpi.confirmed}
+            hint={`/ ${kpi.totalSkills}`}
+            accent="success"
+          />
           <KpiCard label="待经理确认" value={kpi.pendingManager} accent="warning" />
-          <KpiCard label="待完成问卷" value={kpi.pendingQuestionnaires} accent="danger" />
+          <KpiCard
+            label="待完成问卷"
+            value={kpi.pendingQuestionnaires}
+            accent="danger"
+          />
           <KpiCard label="证据不足" value={kpi.lowEvidence} accent="danger" />
           <KpiCard label="技能总数" value={kpi.totalSkills} />
         </div>

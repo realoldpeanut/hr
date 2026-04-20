@@ -108,7 +108,8 @@ export const skills: SkillSummary[] = [
     manager_confirmed_flag: true,
     ai_summary:
       "多个项目与绩效评语共同支撑。在「支付重构」项目中独立完成需求澄清，表现为 L4 级。",
-    manager_comment: "在跨团队协作中展现出清晰的需求拆解能力,可独立负责复杂业务域。",
+    manager_comment:
+      "在跨团队协作中展现出清晰的需求拆解能力，可独立负责复杂业务域。",
     evidence: [
       {
         evidence_id: "ev-001-1",
@@ -127,7 +128,7 @@ export const skills: SkillSummary[] = [
         source_type: "project",
         source_name: "支付系统重构",
         suggested_level: "L4",
-        evidence_summary: "主导需求澄清与验收标准定义,覆盖 6 条业务线",
+        evidence_summary: "主导需求澄清与验收标准定义，覆盖 6 条业务线",
         event_time: "2025-11-05",
         status: "active",
         confidence_score: 0.88,
@@ -149,7 +150,7 @@ export const skills: SkillSummary[] = [
         source_type: "questionnaire",
         source_name: "2026 Q1 标准化问卷",
         suggested_level: "L3",
-        evidence_summary: "自评为 L3,情景题得分 82/100",
+        evidence_summary: "自评为 L3，情景题得分 82/100",
         event_time: "2026-02-08",
         status: "active",
         confidence_score: 0.7,
@@ -166,13 +167,13 @@ export const skills: SkillSummary[] = [
     source_count: 3,
     last_updated_at: "2026-04-15",
     manager_confirmed_flag: false,
-    ai_summary: "学习记录与项目证据较强,建议提交经理确认为 L3。",
+    ai_summary: "学习记录与项目证据较强，建议提交经理确认为 L3。",
     evidence: [
       {
         evidence_id: "ev-002-1",
         skill_id: "sk-002",
         source_type: "learning",
-        source_name: "SQL 高阶实践(LMS)",
+        source_name: "SQL 高阶实践（LMS）",
         suggested_level: "L3",
         evidence_summary: "完成进阶课程 36 学时",
         event_time: "2026-03-02",
@@ -226,7 +227,7 @@ export const skills: SkillSummary[] = [
     last_updated_at: "2026-02-08",
     manager_confirmed_flag: false,
     conflict: true,
-    ai_summary: "仅来自问卷自评,缺少项目或绩效佐证。建议补充 1 个相关项目经历。",
+    ai_summary: "仅来自问卷自评，缺少项目或绩效佐证。建议补充 1 个相关项目经历。",
     evidence: [],
   },
   {
@@ -308,7 +309,7 @@ export const timelineEvents = [
     id: "t-1",
     type: "questionnaire" as EvidenceSourceType,
     title: "完成「2026 Q1 标准化技能问卷」",
-    description: "识别到 7 项技能,其中 4 项已合并到现有档案",
+    description: "识别到 7 项技能，其中 4 项已合并到现有档案",
     time: "2026-02-08 16:22",
   },
   {
@@ -322,14 +323,14 @@ export const timelineEvents = [
     id: "t-3",
     type: "project" as EvidenceSourceType,
     title: "新增项目「支付系统重构」",
-    description: "关联 3 项技能:产品需求分析、技术方案评审、跨团队协作",
+    description: "关联 3 项技能：产品需求分析、技术方案评审、跨团队协作",
     time: "2026-03-20 09:31",
   },
   {
     id: "t-4",
     type: "learning" as EvidenceSourceType,
     title: "完成「SQL 高阶实践」课程",
-    description: "36 学时 · 关联技能:数据分析与洞察",
+    description: "36 学时 · 关联技能：数据分析与洞察",
     time: "2026-03-02 21:15",
   },
   {
@@ -390,16 +391,16 @@ export const aiTips = [
   {
     id: "ai-1",
     type: "gap" as const,
-    text: "「A/B 实验设计」仅有问卷自评,建议补充 1 个相关项目经历提升证据强度。",
+    text: "「A/B 实验设计」仅有问卷自评，建议补充 1 个相关项目经历提升证据强度。",
   },
   {
     id: "ai-2",
     type: "conflict" as const,
-    text: "「产品需求分析」在问卷中评为 L3,但项目与经理评估为 L4,存在轻微冲突。",
+    text: "「产品需求分析」在问卷中评为 L3，但项目与经理评估为 L4，存在轻微冲突。",
   },
   {
     id: "ai-3",
     type: "next" as const,
-    text: "当前有 5 项技能已具备提交条件,可一次性发起经理认定。",
+    text: "当前有 5 项技能已具备提交条件，可一次性发起经理认定。",
   },
 ]

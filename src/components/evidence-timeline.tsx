@@ -1,5 +1,6 @@
 import { timelineEvents } from "@/lib/mock-data"
 import { sourceMeta } from "./status-badge"
+import { Button } from "@/components/ui/button"
 
 export function EvidenceTimeline() {
   return (
@@ -9,12 +10,20 @@ export function EvidenceTimeline() {
     >
       <header className="flex items-center justify-between border-b border-border px-5 py-4">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-foreground">最近更新</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">技能档案的形成与更新记录</p>
+          <h2 className="text-lg font-semibold tracking-tight text-foreground">
+            最近更新
+          </h2>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            技能档案的形成与更新记录
+          </p>
         </div>
-        <button className="text-xs font-medium text-teal-700 hover:text-teal-800">
+        <Button
+          variant="link"
+          size="sm"
+          className="h-auto px-0 text-teal-700 hover:text-teal-800"
+        >
           查看全部
-        </button>
+        </Button>
       </header>
 
       <ol className="flex flex-col">
@@ -25,7 +34,9 @@ export function EvidenceTimeline() {
             <li
               key={ev.id}
               className={`relative flex gap-4 px-5 py-4 ${
-                i !== timelineEvents.length - 1 ? "border-b border-border/60" : ""
+                i !== timelineEvents.length - 1
+                  ? "border-b border-border/60"
+                  : ""
               }`}
             >
               {/* vertical line */}
@@ -43,12 +54,16 @@ export function EvidenceTimeline() {
               </div>
               <div className="flex flex-1 flex-col gap-0.5 min-w-0">
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="text-sm font-medium text-foreground leading-snug">{ev.title}</p>
+                  <p className="text-sm font-medium text-foreground leading-snug">
+                    {ev.title}
+                  </p>
                   <span className="text-xs text-muted-foreground tabular-nums shrink-0">
                     {ev.time}
                   </span>
                 </div>
-                <p className="text-xs leading-relaxed text-muted-foreground">{ev.description}</p>
+                <p className="text-xs leading-relaxed text-muted-foreground">
+                  {ev.description}
+                </p>
               </div>
             </li>
           )
