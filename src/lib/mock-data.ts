@@ -44,6 +44,14 @@ export interface SkillSummary {
   evidence: SkillEvidence[]
 }
 
+export interface RecognizedSkillSummary {
+  skill_name: string
+  skill_category: string
+  suggested_level: SkillLevel
+  is_new?: boolean
+  delta?: "up" | "down"
+}
+
 export interface QuestionnaireTask {
   questionnaire_id: string
   questionnaire_name: string
@@ -60,6 +68,8 @@ export interface QuestionnaireTask {
   estimated_minutes: number
   submitted_at?: string
   generated_skill_count?: number
+  recognition_summary?: string
+  recognized_skills?: RecognizedSkillSummary[]
 }
 
 export const kpi = {
@@ -104,6 +114,59 @@ export const questionnaireTasks: QuestionnaireTask[] = [
     estimated_minutes: 20,
     submitted_at: "2026-01-27 10:14",
     generated_skill_count: 9,
+    recognition_summary:
+      "本次作答主要体现出你在产品需求分析与系统架构设计上的稳定能力，新增 2 项领导力相关技能证据。",
+    recognized_skills: [
+      {
+        skill_name: "产品需求分析",
+        skill_category: "产品能力",
+        suggested_level: "L4",
+        delta: "up",
+      },
+      {
+        skill_name: "用户访谈与调研",
+        skill_category: "产品能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "系统架构设计",
+        skill_category: "技术能力",
+        suggested_level: "L4",
+      },
+      {
+        skill_name: "A/B 实验设计",
+        skill_category: "技术能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "跨团队沟通",
+        skill_category: "通用能力",
+        suggested_level: "L4",
+        delta: "up",
+      },
+      {
+        skill_name: "目标拆解",
+        skill_category: "通用能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "人员辅导",
+        skill_category: "领导力",
+        suggested_level: "L2",
+        is_new: true,
+      },
+      {
+        skill_name: "反馈与一对一",
+        skill_category: "领导力",
+        suggested_level: "L2",
+        is_new: true,
+      },
+      {
+        skill_name: "AI 工具应用",
+        skill_category: "新技术",
+        suggested_level: "L3",
+      },
+    ],
   },
   {
     questionnaire_id: "q-2025-h2-ai",
@@ -116,6 +179,27 @@ export const questionnaireTasks: QuestionnaireTask[] = [
     estimated_minutes: 10,
     submitted_at: "2025-12-15 21:48",
     generated_skill_count: 3,
+    recognition_summary:
+      "你在日常研发中已深度使用 AI 辅助编码与文档生成，Prompt 设计与结果验证能力突出。",
+    recognized_skills: [
+      {
+        skill_name: "Prompt 设计",
+        skill_category: "新技术",
+        suggested_level: "L3",
+        is_new: true,
+      },
+      {
+        skill_name: "AI 辅助编码",
+        skill_category: "技术能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "AI 结果验证",
+        skill_category: "通用能力",
+        suggested_level: "L2",
+        is_new: true,
+      },
+    ],
   },
   {
     questionnaire_id: "q-2025-h2-001",
@@ -128,6 +212,67 @@ export const questionnaireTasks: QuestionnaireTask[] = [
     estimated_minutes: 22,
     submitted_at: "2025-08-09 16:02",
     generated_skill_count: 11,
+    recognition_summary:
+      "整体能力稳定提升，产品与技术类技能均进入熟练区间，跨团队协作证据显著增加。",
+    recognized_skills: [
+      {
+        skill_name: "产品需求分析",
+        skill_category: "产品能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "竞品分析",
+        skill_category: "产品能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "路线图规划",
+        skill_category: "产品能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "系统架构设计",
+        skill_category: "技术能力",
+        suggested_level: "L3",
+        delta: "up",
+      },
+      {
+        skill_name: "服务端开发",
+        skill_category: "技术能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "性能优化",
+        skill_category: "技术能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "数据分析",
+        skill_category: "数据能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "指标体系设计",
+        skill_category: "数据能力",
+        suggested_level: "L2",
+        is_new: true,
+      },
+      {
+        skill_name: "跨团队沟通",
+        skill_category: "通用能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "会议主持",
+        skill_category: "通用能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "技术文档写作",
+        skill_category: "通用能力",
+        suggested_level: "L3",
+      },
+    ],
   },
   {
     questionnaire_id: "q-2025-q2-collab",
@@ -150,6 +295,50 @@ export const questionnaireTasks: QuestionnaireTask[] = [
     estimated_minutes: 20,
     submitted_at: "2025-02-20 09:36",
     generated_skill_count: 8,
+    recognition_summary:
+      "产品与工程类能力处于熟练区间，跨团队协作已有较多实证，建议在数据类技能补充更多证据。",
+    recognized_skills: [
+      {
+        skill_name: "产品需求分析",
+        skill_category: "产品能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "用户访谈与调研",
+        skill_category: "产品能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "服务端开发",
+        skill_category: "技术能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "前端开发",
+        skill_category: "技术能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "数据库设计",
+        skill_category: "技术能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "跨团队沟通",
+        skill_category: "通用能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "项目推进",
+        skill_category: "通用能力",
+        suggested_level: "L3",
+      },
+      {
+        skill_name: "技术文档写作",
+        skill_category: "通用能力",
+        suggested_level: "L2",
+      },
+    ],
   },
   {
     questionnaire_id: "q-2024-h2-001",
@@ -162,6 +351,45 @@ export const questionnaireTasks: QuestionnaireTask[] = [
     estimated_minutes: 20,
     submitted_at: "2024-08-10 14:20",
     generated_skill_count: 7,
+    recognition_summary:
+      "以技术开发类证据为主，产品与协作类能力已形成基础。",
+    recognized_skills: [
+      {
+        skill_name: "服务端开发",
+        skill_category: "技术能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "前端开发",
+        skill_category: "技术能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "接口设计",
+        skill_category: "技术能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "产品需求分析",
+        skill_category: "产品能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "跨团队沟通",
+        skill_category: "通用能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "技术文档写作",
+        skill_category: "通用能力",
+        suggested_level: "L2",
+      },
+      {
+        skill_name: "版本管理",
+        skill_category: "通用能力",
+        suggested_level: "L2",
+      },
+    ],
   },
 ]
 

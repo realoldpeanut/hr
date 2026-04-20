@@ -6,6 +6,7 @@ import {
   Clock,
   Eye,
   FileDown,
+  ListChecks,
   PlayCircle,
   Search,
   Sparkles,
@@ -19,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { RecognizedSkillsDialog } from "@/components/recognized-skills-dialog"
 import { cn } from "@/lib/utils"
 
 type StatusFilter =
@@ -83,6 +85,8 @@ export function QuestionnaireHistoryPage({
   const [selectedId, setSelectedId] = useState<string | null>(
     questionnaireTasks[0]?.questionnaire_id ?? null,
   )
+  const [skillsDialogTask, setSkillsDialogTask] =
+    useState<QuestionnaireTask | null>(null)
 
   const sorted = useMemo(
     () =>
@@ -282,6 +286,18 @@ export function QuestionnaireHistoryPage({
                               : "开始作答"}
                             <ArrowRight className="h-4 w-4" />
                           </Button>
+                        ) : t.recognized_skills?.length ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setSkillsDialogTask(t)
+                            }}
+                          >
+                            <ListChecks className="h-4 w-4" />
+                            查看技能
+                          </Button>
                         ) : (
                           <Button
                             size="sm"
@@ -305,11 +321,23 @@ export function QuestionnaireHistoryPage({
 
           <aside className="lg:sticky lg:top-20 lg:self-start">
             {selected ? (
-              <DetailPanel task={selected} onContinue={onContinue} />
+              <DetailPanel
+                task={selected}
+                onContinue={onContinue}
+                onViewSkills={() => setSkillsDialogTask(selected)}
+              />
             ) : null}
           </aside>
         </div>
       </div>
+
+      <RecognizedSkillsDialog
+        open={skillsDialogTask !== null}
+        onOpenChange={(o) => {
+          if (!o) setSkillsDialogTask(null)
+        }}
+        task={skillsDialogTask}
+      />
     </main>
   )
 }
@@ -347,9 +375,11 @@ function StatCard({
 function DetailPanel({
   task,
   onContinue,
+  onViewSkills,
 }: {
   task: QuestionnaireTask
   onContinue: () => void
+  onViewSkills: () => void
 }) {
   const meta = statusMeta[task.employee_task_status]
   const isActionable =
@@ -399,14 +429,24 @@ function DetailPanel({
 
       {isSubmitted && task.generated_skill_count ? (
         <div className="border-t border-border px-5 py-4">
-          <div className="flex items-center gap-2 rounded-lg bg-teal-50/70 px-3 py-2.5 text-sm text-teal-900">
-            <Sparkles className="h-4 w-4 text-teal-700" />
-            本次作答共识别
-            <span className="font-semibold tabular-nums">
-              {task.generated_skill_count}
+          <button
+            type="button"
+            onClick={onViewSkills}
+            className="group flex w-full items-center justify-between gap-3 rounded-lg bg-teal-50/70 px-3 py-2.5 text-left text-sm text-teal-900 transition hover:bg-teal-50"
+          >
+            <span className="inline-flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-teal-700" />
+              本次作答共识别
+              <span className="font-semibold tabular-nums">
+                {task.generated_skill_count}
+              </span>
+              项技能
             </span>
-            项技能证据
-          </div>
+            <span className="inline-flex items-center gap-1 text-xs text-teal-800 group-hover:text-teal-900">
+              查看详情
+              <ArrowRight className="h-3.5 w-3.5" />
+            </span>
+          </button>
         </div>
       ) : null}
 
@@ -422,13 +462,19 @@ function DetailPanel({
         {isSubmitted ? (
           <>
             <Button size="sm" variant="outline">
-              <Eye className="h-4 w-4" />
-              查看答卷
-            </Button>
-            <Button size="sm" variant="outline">
               <FileDown className="h-4 w-4" />
               导出 PDF
             </Button>
+            <Button size="sm" variant="outline">
+              <Eye className="h-4 w-4" />
+              查看答卷
+            </Button>
+            {task.recognized_skills?.length ? (
+              <Button size="sm" onClick={onViewSkills}>
+                <ListChecks className="h-4 w-4" />
+                查看识别的技能
+              </Button>
+            ) : null}
           </>
         ) : null}
         {task.employee_task_status === "overdue" ? (
