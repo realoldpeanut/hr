@@ -6,14 +6,24 @@ import { SourceModules } from "@/components/source-modules"
 import { EvidenceTimeline } from "@/components/evidence-timeline"
 import { SidePanel } from "@/components/side-panel"
 import { QuestionnairePage } from "@/pages/questionnaire-page"
+import { QuestionnaireHistoryPage } from "@/pages/questionnaire-history-page"
 
-type View = "dashboard" | "questionnaire"
+type View = "dashboard" | "questionnaire" | "questionnaire-history"
 
 export default function App() {
   const [view, setView] = useState<View>("dashboard")
 
   if (view === "questionnaire") {
     return <QuestionnairePage onExit={() => setView("dashboard")} />
+  }
+
+  if (view === "questionnaire-history") {
+    return (
+      <QuestionnaireHistoryPage
+        onExit={() => setView("dashboard")}
+        onContinue={() => setView("questionnaire")}
+      />
+    )
   }
 
   return (
@@ -24,7 +34,12 @@ export default function App() {
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-6 px-6 py-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
         <div className="flex flex-col gap-6 min-w-0">
           <SkillsOverview />
-          <SourceModules />
+          <SourceModules
+            onContinueQuestionnaire={() => setView("questionnaire")}
+            onViewQuestionnaireHistory={() =>
+              setView("questionnaire-history")
+            }
+          />
           <EvidenceTimeline />
         </div>
 
@@ -32,7 +47,6 @@ export default function App() {
           <SidePanel />
         </div>
       </div>
-
     </main>
   )
 }

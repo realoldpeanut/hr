@@ -23,6 +23,7 @@ type Action = {
   label: string
   icon?: typeof Upload
   primary?: boolean
+  onClick?: () => void
 }
 
 interface ModuleCardProps {
@@ -87,6 +88,7 @@ function ModuleCard({
               key={i}
               size="sm"
               variant={a.primary ? "default" : "outline"}
+              onClick={a.onClick}
             >
               {ActionIcon ? <ActionIcon /> : null}
               {a.label}
@@ -99,7 +101,15 @@ function ModuleCard({
   )
 }
 
-export function SourceModules() {
+interface SourceModulesProps {
+  onContinueQuestionnaire?: () => void
+  onViewQuestionnaireHistory?: () => void
+}
+
+export function SourceModules({
+  onContinueQuestionnaire,
+  onViewQuestionnaireHistory,
+}: SourceModulesProps = {}) {
   return (
     <section aria-label="六类技能来源">
       <div className="mb-4">
@@ -130,8 +140,12 @@ export function SourceModules() {
             },
           ]}
           actions={[
-            { label: "继续作答", primary: true },
-            { label: "查看历史" },
+            {
+              label: "继续作答",
+              primary: true,
+              onClick: onContinueQuestionnaire,
+            },
+            { label: "查看历史", onClick: onViewQuestionnaireHistory },
           ]}
         />
 
