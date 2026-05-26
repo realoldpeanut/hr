@@ -35,7 +35,7 @@ export const MOCK_MESSAGES = [
   {
     id: "msg-1",
     sender: "kora",
-    content: "DTC渠道销售业绩），将其与您的"全域渠道与客户体验优化"建立对齐关系。",
+    content: "DTC渠道销售业绩），将其与您的「全域渠道与客户体验优化」建立对齐关系。",
     timestamp: "04:08:13 PM",
   },
   {
